@@ -8,9 +8,9 @@ module.exports = {
             let StrongPunch = await abilitySchema.create({
                 level: 1,
                 skillName: "Сильный_удар",
-                cd: 3,
+                cd: 4,
                 baseStat: "str",
-                dmgAmount: 5,
+                dmgAmount: 8,
                 healAmount: 0,
             });
             StrongPunch.save();
@@ -21,10 +21,10 @@ module.exports = {
             let SelfHeal = await abilitySchema.create({
                 level: 1,
                 skillName: "Восстановление",
-                cd: 4,
+                cd: 5,
                 baseStat: "int",
                 dmgAmount: 0,
-                healAmount: 4,
+                healAmount: 5,
             });
             SelfHeal.save();
         }

@@ -11,7 +11,7 @@ const profileSchema = new Schema({
     maxHp: Number,
     armor: Number, //броня в процентах, броня 1 = 1% шанса избежать урона
     str: Number, // Сила атаки, навыки силы
-    dex: Number, // навыки ловкости, шанс крита. 1% крита за каждые 20 очков ловкости 
+    dex: Number, // навыки ловкости, шанс крита. 1% крита за каждые 10 очков ловкости 
     vit: Number, // количество хп
     int: Number, // навыки инты, мб чо еще
     firstSkill: String,
