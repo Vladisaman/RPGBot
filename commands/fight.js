@@ -9,8 +9,8 @@ module.exports = {
     async execute(client, message, args, Discord, AttackerData, AttackedData) {
         var i = 1
 
-        var attackerResponse = AttackerData;
-        var attackedResponse = AttackedData;
+        let attackerResponse = AttackerData;
+        let attackedResponse = AttackedData;
 
         var attackDamage;
         var crit;
@@ -23,18 +23,18 @@ module.exports = {
         while (attackerResponse.hp > 0 && attackedResponse.hp > 0) {
 
 
-            attackDamage = Math.floor(Math.random() * attackerResponse.str) + attackerResponse.str;
+            attackDamage = Math.floor(Math.random() * attackedResponse.str) + attackedResponse.str;
 
-            critChance = Math.floor(attackerResponse.dex / 10) + 15;
+            critChance = Math.floor(attackedResponse.dex / 10) + 15;
             isCrit = Math.floor(Math.random() * 100) + 1;
-            if(critChance >= isCrit){
+            if (critChance >= isCrit) {
                 attackDamage *= 2;
-                message.channel.send(`${attacker} совершает критический удар!`)
+                message.channel.send(`${attacked} совершает критический удар!`)
             }
 
-            attackedResponse = await profileSchema.findOneAndUpdate(
+            attackerResponse = await profileSchema.findOneAndUpdate(
                 {
-                    userID: AttackedData.userID,
+                    userID: AttackerData.userID,
                 },
                 {
                     $inc: {
@@ -43,19 +43,15 @@ module.exports = {
                 }
             );
 
-            message.channel.send(`${attacker} наносит удар по ${attacked} и наносит ${attackDamage} урона.`);
+            message.channel.send(`${attacked} наносит удар по ${attacker} и наносит ${attackDamage} урона.`);
 
-
-            if (attackerResponse.hp <= 0 || attackedResponse <= 0) {
-                break;
-            }
-
+            if (attackerResponse.hp < 0) break;
 
             attackDamage = Math.floor(Math.random() * attackerResponse.str) + attackerResponse.str;
 
             critChance = Math.floor(attackerResponse.dex / 10) + 15;
             isCrit = Math.floor(Math.random() * 100) + 1;
-            if(critChance >= isCrit){
+            if (critChance >= isCrit) {
                 attackDamage *= 2;
                 message.channel.send(`${attacker} совершает критический удар!`)
             }
@@ -75,11 +71,11 @@ module.exports = {
         }
 
         if (attackerResponse.hp <= 0) {
-            message.channel.send("<@" + attackerResponse.userID + ">" `проиграл бой.`);
+            message.channel.send("<@" + attackerResponse.userID + ">" + ` проиграл бой.`);
         }
 
         if (attackedResponse.hp <= 0) {
-            message.channel.send("<@" + attackedResponse.userID + ">"  ` проиграл бой.`);
+            message.channel.send("<@" + attackedResponse.userID + ">" + ` проиграл бой.`);
         }
 
         const response1 = await profileSchema.findOneAndUpdate(

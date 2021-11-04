@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-const abilitySchema = require('./abilitySchema');
 
 
 const profileSchema = new Schema({
@@ -16,6 +15,8 @@ const profileSchema = new Schema({
     int: Number, // навыки инты, мб чо еще
     firstSkill: String,
     secondSkill: String, 
+    buff: String,
+    debuff: String,
     isFighting: Boolean,
     isDueling: Boolean,
     duelID: String,
