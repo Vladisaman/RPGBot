@@ -11,7 +11,7 @@ module.exports = {
                 type: "attack",
                 cd: 4,
                 baseStat: "str",
-                dmgAmount: 200,
+                dmgAmount: 20,
                 healAmount: 0,
                 buff: "",
                 debuff: "",

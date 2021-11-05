@@ -1,5 +1,7 @@
 const abilitySchema = require("../models/abilitySchema");
 const profileSchema = require("../models/profileSchema");
+const AttackProfile = require("../util/battleProfile");
+const AbilityProfile = require("../util/abilityProfile");
 
 
 module.exports = {
@@ -12,62 +14,62 @@ module.exports = {
         let attackerResponse = AttackerData;
         let attackedResponse = AttackedData;
 
-        var attackDamage;
-        var crit;
-        var critChance;
-        var isCrit;
+        let attackProfile = new AttackProfile();
 
         const attacked = client.users.cache.get(AttackedData.userID).username;
         const attacker = client.users.cache.get(AttackerData.userID).username;
 
         while (attackerResponse.hp > 0 && attackedResponse.hp > 0) {
 
+            attackerResponse = attackProfile.attack(attackedResponse.str, attackedResponse.dex, attackedResponse, attackerResponse, client, message);
 
-            attackDamage = Math.floor(Math.random() * attackedResponse.str) + attackedResponse.str;
+            // attackDamage = Math.floor(Math.random() * attackedResponse.str) + attackedResponse.str;
 
-            critChance = Math.floor(attackedResponse.dex / 10) + 15;
-            isCrit = Math.floor(Math.random() * 100) + 1;
-            if (critChance >= isCrit) {
-                attackDamage *= 2;
-                message.channel.send(`${attacked} совершает критический удар!`)
-            }
+            // critChance = Math.floor(attackedResponse.dex / 10) + 15;
+            // isCrit = Math.floor(Math.random() * 100) + 1;
+            // if (critChance >= isCrit) {
+            //     attackDamage *= 2;
+            //     message.channel.send(`${attacked} совершает критический удар!`)
+            // }
 
-            attackerResponse = await profileSchema.findOneAndUpdate(
-                {
-                    userID: AttackerData.userID,
-                },
-                {
-                    $inc: {
-                        hp: -attackDamage,
-                    },
-                }
-            );
+            // attackerResponse = await profileSchema.findOneAndUpdate(
+            //     {
+            //         userID: AttackerData.userID,
+            //     },
+            //     {
+            //         $inc: {
+            //             hp: -attackDamage,
+            //         },
+            //     }
+            // );
 
-            message.channel.send(`${attacked} наносит удар по ${attacker} и наносит ${attackDamage} урона.`);
+            // message.channel.send(`${attacked} наносит удар по ${attacker} и наносит ${attackDamage} урона.`);
 
             if (attackerResponse.hp < 0) break;
 
-            attackDamage = Math.floor(Math.random() * attackerResponse.str) + attackerResponse.str;
+            attackedResponse = attackProfile.attack(attackerResponse.str, attackerResponse.dex, attackerResponse, attackedResponse, client, message);
 
-            critChance = Math.floor(attackerResponse.dex / 10) + 15;
-            isCrit = Math.floor(Math.random() * 100) + 1;
-            if (critChance >= isCrit) {
-                attackDamage *= 2;
-                message.channel.send(`${attacker} совершает критический удар!`)
-            }
+            // attackDamage = Math.floor(Math.random() * attackerResponse.str) + attackerResponse.str;
 
-            attackedResponse = await profileSchema.findOneAndUpdate(
-                {
-                    userID: AttackedData.userID,
-                },
-                {
-                    $inc: {
-                        hp: -attackDamage,
-                    },
-                }
-            );
+            // critChance = Math.floor(attackerResponse.dex / 10) + 15;
+            // isCrit = Math.floor(Math.random() * 100) + 1;
+            // if (critChance >= isCrit) {
+            //     attackDamage *= 2;
+            //     message.channel.send(`${attacker} совершает критический удар!`)
+            // }
 
-            message.channel.send(`${attacker} наносит удар по ${attacked} и наносит ${attackDamage} урона.`);
+            // attackedResponse = await profileSchema.findOneAndUpdate(
+            //     {
+            //         userID: AttackedData.userID,
+            //     },
+            //     {
+            //         $inc: {
+            //             hp: -attackDamage,
+            //         },
+            //     }
+            // );
+
+            // message.channel.send(`${attacker} наносит удар по ${attacked} и наносит ${attackDamage} урона.`);
         }
 
         if (attackerResponse.hp <= 0) {
