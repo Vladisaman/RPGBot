@@ -4,7 +4,7 @@ module.exports = {
     name: 'дуэль',
     description: "",
     cooldown: 60,
-    async execute(client, message, args, Discord, AttackerData) {
+    async execute(client, message, args, Discord) {
         const target = message.mentions.users.first()
         let AttackedData = profileSchema.findOne({ userID: target.id })
 

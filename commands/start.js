@@ -9,6 +9,7 @@ module.exports = {
         if (profileData === null) {
             let profile = await profileSchema.create({
                 userID: message.author.id,
+                username: message.author.username,
                 level: 1,
                 gold: 50,
                 hp: 25,

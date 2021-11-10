@@ -4,8 +4,9 @@ var Schema = mongoose.Schema;
 
 const profileSchema = new Schema({
     userID: String,
+    username: String,
     level: Number,
-    gold: Number, // бомж или не бомж, вот в чём вопрос?
+    gold: Number, //кошёлек
     hp: Number, // хп лол
     maxHp: Number,
     armor: Number, //броня в процентах, броня 1 = 1% шанса избежать урона
@@ -18,7 +19,6 @@ const profileSchema = new Schema({
     buff: String,
     debuff: String,
     isFighting: Boolean,
-    isDueling: Boolean,
     duelID: String,
 })
 

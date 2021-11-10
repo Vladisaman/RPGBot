@@ -27,7 +27,7 @@ module.exports = {
                     );
 
                     message.reply(`Умение ${ability.skillName} было успешно надето в слот 1.`)
-                } else if (profileData.firstSkill && profileData.firstSkill == args[0]) {
+                } else if (profileData.firstSkill && profileData.firstSkill === args[0]) {
                     message.reply(`Этот навык уже находится в используемых.`)
                 } else if (!profileData.secondSkill && profileData.firstSkill != args[0]) {
                     const response2 = await profileSchema.findOneAndUpdate(
@@ -42,7 +42,7 @@ module.exports = {
                     );
 
                     message.reply(`Умение ${ability.skillName} было успешно надето в слот 2`)
-                } else if (profileData.secondSkill && profileData.secondSkill == args[0]) {
+                } else if (profileData.secondSkill && profileData.secondSkill === args[0]) {
                     message.reply(`Этот навык уже находится в используемых.`)
                 }
             }
